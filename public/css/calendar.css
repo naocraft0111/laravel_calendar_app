@@ -1,6 +1,9 @@
 .day-blank {
     background-color: #efefef !important;
 }
+.day-close {
+    background-color: #FF7F50 !important;
+}
 .day-sun .day {
     color: red;
 }

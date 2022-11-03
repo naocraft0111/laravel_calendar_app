@@ -2,6 +2,7 @@
 namespace App\Calendar;
 
 use Carbon\Carbon;
+use App\Models\Calendar\HolidaySetting;
 
 /**
  * その週のカレンダーを出力する
@@ -28,7 +29,7 @@ class CalendarWeek {
      * 週の開始日～終了日まで作成する
      * @return CalendarWeekDay[]
      */
-    function getDays(){
+    function getDays(HolidaySetting $setting){
 
         $days = [];
 
@@ -51,6 +52,7 @@ class CalendarWeek {
 
             // 今月
             $day = new CalendarWeekDay($tmpDay->copy());
+            $day->checkHoliday($setting);
             $days[] = $day;
             // 翌日に移動
             $tmpDay->addDay(1);

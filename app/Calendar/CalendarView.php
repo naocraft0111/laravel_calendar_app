@@ -1,6 +1,7 @@
 <?php
 namespace App\Calendar;
 
+use App\Models\Calendar\HolidaySetting;
 use Carbon\Carbon;
 
 /**
@@ -55,6 +56,9 @@ class CalendarView {
      * カレンダーを出力する
      */
     function render(){
+        // HolidaySetting
+        $setting = HolidaySetting::firstOrCreate();
+        $setting->loadHoliday($this->carbon->format("Y"));
         $html = [];
         $html[] = '<div class="calendar">';
         $html[] = '<table class="table">';
@@ -79,7 +83,7 @@ class CalendarView {
             // 週カレンダーオブジェクトを使ってHTMLのクラス名を出力します。
             $html[] = '<tr class="'.$week->getClassName().'">';
             // 週カレンダーオブジェクトから、日カレンダーオブジェクトの配列を取得します。
-            $days = $week->getDays();
+            $days = $week->getDays($setting);
             // 日カレンダーオブジェクトをループさせながら、クラス名を出力し、<td>の中に日カレンダーを出力していきます。
             foreach($days as $day){
                 $html[] = '<td class="'.$day->getClassName().'">';
