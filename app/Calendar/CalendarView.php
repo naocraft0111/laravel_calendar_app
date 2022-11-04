@@ -6,7 +6,7 @@ use App\Models\Calendar\ExtraHoliday;
 use Carbon\Carbon;
 
 /**
- * カレンダーを出力する
+ * カレンダーを出力する（ベースとなるカレンダー）
  */
 class CalendarView {
 
@@ -62,9 +62,7 @@ class CalendarView {
             $days = $week->getDays($setting);
             // 日カレンダーオブジェクトをループさせながら、クラス名を出力し、<td>の中に日カレンダーを出力していきます。
             foreach($days as $day){
-                $html[] = '<td class="'.$day->getClassName().'">';
-                $html[] = $day->render();
-                $html[] = '</td>';
+                $html[] = $this->renderDay($day);
             }
             $html[] = '</tr>';
         }
@@ -75,7 +73,7 @@ class CalendarView {
         $html[] = '</div>';
         return implode("", $html);
     }
-    
+
     // 週の情報を取得
     protected function getWeeks(){
         $weeks = [];
@@ -109,6 +107,17 @@ class CalendarView {
      */
     protected function getWeek(Carbon $date, $index = 0){
         return new CalendarWeek($date, $index);
+    }
+
+    /**
+     * 日を描画する
+     */
+    protected function renderDay(CalendarWeekDay $day){
+        $html = [];
+        $html[] = '<td class="'.$day->getClassName().'">';
+        $html[] = $day->render();
+        $html[] = '</td>';
+        return implode("", $html);
     }
 
 }

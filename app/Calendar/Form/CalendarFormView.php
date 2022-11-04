@@ -7,7 +7,7 @@ use App\Calendar\CalendarView;
 use App\Models\Calendar\ExtraHoliday;
 
 /**
- * 表示用
+ * 表示用 （臨時営業日用のカレンダー）
  */
 class CalendarFormView extends CalendarView {
     /**
