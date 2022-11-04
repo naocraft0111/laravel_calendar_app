@@ -21,6 +21,10 @@ class ExtraHolidaySettingController extends Controller
     }
 
     public function update(Request $request){
+
+        $input = $request->get("extra_holiday");
+
+        ExtraHoliday::updateExtraHolidayWithMonth(date("Ym"), $input);
         return redirect()
             ->action([ExtraHolidaySettingController::class, 'form'])
             ->withStatus("保存しました");
