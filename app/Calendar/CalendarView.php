@@ -2,6 +2,7 @@
 namespace App\Calendar;
 
 use App\Models\Calendar\HolidaySetting;
+use App\Models\Calendar\ExtraHoliday;
 use Carbon\Carbon;
 
 /**
@@ -10,6 +11,7 @@ use Carbon\Carbon;
 class CalendarView {
 
     protected $carbon;
+    protected $holidays = [];
 
     function __construct($date)
     {
@@ -64,6 +66,10 @@ class CalendarView {
         // HolidaySetting
         $setting = HolidaySetting::firstOrCreate();
         $setting->loadHoliday($this->carbon->format("Y"));
+
+        // 臨時営業日の読み込み
+        $this->holidays = ExtraHoliday::getExtraHolidayWithMonth($this->carbon->format("Ym"));
+        
         $html = [];
         $html[] = '<div class="calendar">';
         $html[] = '<table class="table">';
