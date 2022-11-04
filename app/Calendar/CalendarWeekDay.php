@@ -38,6 +38,13 @@ class CalendarWeekDay {
         return '<p class="day">' . $this->carbon->format("j"). '</p>';
     }
 
+    function getDateKey(){
+        return $this->carbon->format("Ymd");
+    }
+    function setHoliday($flag){
+        $this->isHoliday= $flag;
+    }
+    
     /**
      * 休みかどうか判定する
      */

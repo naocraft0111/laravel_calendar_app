@@ -9,7 +9,7 @@ use Carbon\Carbon;
  */
 class CalendarView {
 
-    private $carbon;
+    protected $carbon;
 
     function __construct($date)
     {
@@ -34,8 +34,7 @@ class CalendarView {
         $lastDay = $this->carbon->copy()->lastOfMonth();
 
         // 1週目
-        $week = new CalendarWeek($firstDay->copy());
-        $weeks[] = $week;
+        $weeks[] = $this->getWeek($firstDay->copy());
 
         // 作業用の日(翌週の月曜日が欲しいので、+7日した後、週の開始日に移動する)
         $tmpDay = $firstDay->copy()->addDay(7)->startOfWeek();
@@ -43,13 +42,19 @@ class CalendarView {
         // 月末までループさせる
         while($tmpDay->lte($lastDay)){
             // 週カレンダーViewを作成する。count()は何週目かを週カレンダーオブジェクトに伝えるために設置
-            $week = new CalendarWeek($tmpDay, count($weeks));
-            $weeks[] = $week;
+            $weeks[] = $this->getWeek($tmpDay, count($weeks));
             // 次の週=+7日する
             $tmpDay->addDay(7);
         }
 
         return $weeks;
+    }
+
+    /**
+     * @return CalendarWeek
+     */
+    protected function getWeek(Carbon $date, $index = 0){
+        return new CalendarWeek($date, $index);
     }
 
     /**
