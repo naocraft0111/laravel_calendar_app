@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Calendar\HolidaySettingController;
+use App\Http\Controllers\Calendar\ExtraHolidaySettingController;
 use App\Http\Controllers\CalendarController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,9 @@ Route::get('/holiday_setting', [HolidaySettingController::class, 'form'])
     ->name('holiday_setting');
 Route::post('/holiday_setting', [HolidaySettingController::class, 'update'])
     ->name('update_holiday_setting');
+
+// 臨時営業設定
+Route::get('/extra_holiday_setting', [ExtraHolidaySettingController::class, 'form'])
+    ->name('extra_holiday_setting');
+Route::post('/extra_holiday_setting', [ExtraHolidaySettingController::class, 'update'])
+    ->name('update_extra_holiday_setting');
