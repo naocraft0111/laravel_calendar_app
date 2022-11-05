@@ -26,4 +26,14 @@ class CalendarFormView extends CalendarView {
 
         return $week;
     }
+
+    /**
+     * 前後の月の部分を取得
+     */
+    function render(){
+        // parent::render()で元々のカレンダー部分を取得する
+        return parent::render() .
+            "<input type='hidden' name='ym' value='".$this->carbon->format("Ym")."' />" .
+            "<input type='hidden' name='date' value='".$this->carbon->format("Y-m")."' />";
+    }
 }
