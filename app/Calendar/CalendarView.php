@@ -74,6 +74,20 @@ class CalendarView {
         return implode("", $html);
     }
 
+    /**
+     * 次の月
+     */
+    public function getNextMonth(){
+        return $this->carbon->copy()->addMonthsNoOverflow()->format('Y-m');
+    }
+
+    /**
+     * 前の月
+     */
+    public function getPreviousMonth(){
+        return $this->carbon->copy()->subMonthsNoOverflow()->format('Y-m');
+    }
+
     // 週の情報を取得
     protected function getWeeks(){
         $weeks = [];
