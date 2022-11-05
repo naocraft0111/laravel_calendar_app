@@ -12,9 +12,22 @@ use App\Models\Calendar\ExtraHoliday;
  */
 class ExtraHolidaySettingController extends Controller
 {
-    public function form(){
+    public function form(Request $request){
 
-        $calendar = new CalendarFormView(time());
+        // クエリーのdateを受け取る
+		$date = $request->input("date");
+
+		// dateがYYYY-MMの形式かどうか判定する
+		if($date && preg_match("/^[0-9]{4}-[0-9]{2}$/", $date)){
+			$date = strtotime($date . '+1 month');
+		}else{
+			$date = null;
+		}
+
+		// 取得出来ない時は現在(=今月)を指定する
+		if(!$date)$date = time();
+
+        $calendar = new CalendarFormView($date);
         return view('calendar.extra_holiday_setting_form', compact(
             'calendar'
         ));

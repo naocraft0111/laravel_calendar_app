@@ -4,7 +4,13 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ $calendar->getTitle() }}の臨時営業日設定</div>
+                <div class="card-header text-center">
+                    <a class="btn btn-outline-secondary float-left" href="{{ url('/extra_holiday_setting?date=' . $calendar->getPreviousMonth())}}">前の月</a>
+
+                    <span>{{ $calendar->getTitle() }}の臨時営業日の設定</span>
+
+                    <a class="btn btn-outline-secondary float-right" href="{{ url('/extra_holiday_setting?date=' . $calendar->getNextMonth())}}">次の月</a>
+                </div>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success"
